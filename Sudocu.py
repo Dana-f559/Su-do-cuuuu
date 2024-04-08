@@ -1,6 +1,5 @@
 import sys
 import re
-import pandas as pd
 
 row = 9
 cols = 9

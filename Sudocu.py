@@ -2,21 +2,22 @@ import sys
 import re
 from tabulate import tabulate
 
+#These are the global constants for the size of sudoku
 row = 9
 cols = 9
 
 def main():
 	print("ENTER THE SUDOCU")
-	form = []
+	form = [] #This is the Sudoku
 	#DONE TODO 1: reask the user if the input is not correct
 	#! TODO 2: except keybord interuption, and exit prettier
 	#! TODO 3: store the input into a list of lists
 	
     # Changed from for loop to while loop, using seperate variable to store line number and incrementing it.
 	# Using i to run the while loop for number of rows.
-	i = row
-	line = 1
-	while i > 0:
+	i = row # Putting i = row because I am using it for while loop with decrement, and dont wanna affect the global variable
+	line = 1 #This is used solely for the purpose of denoting the position of line.
+	while i > 0: #This will run the loop until row times, getting input for each row
 		# print which line to add
 		print(f"Line {line}")
 
@@ -28,11 +29,11 @@ def main():
 			print("Invalid input, please try again")
 
 		else:
-			# Appending the list of values for a row to the main list.
+			# Appending the list of values for a row to the Sudoku{form}.
 			form.append(list(temp))
-			i -= 1
-			line += 1
-	CreateSudocu(form)
+			i -= 1 #This row input valid so decrementing
+			line += 1 #This row accepted so incrementing for it to print line {n} where n is next line no.
+	CreateSudocu(form) #This is for visual display of grid.
 
 # pant
 def checkInput(text: str) -> bool:
@@ -61,9 +62,9 @@ def CreateSudocu(form: list) -> None:
 # prob wuru
 
 def checkSudocu(sudocu: list) -> bool:
-	for i in row:
-		for j in cols:
-			if form[i][j] in form[i] or form[i][j] in form[j]
+	# for i in row:
+	# 	for j in cols:
+	# 		if form[i][j] in form[i] or form[i][j] in form[j]
 
 	return True
 

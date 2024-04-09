@@ -1,5 +1,6 @@
 import sys
 import re
+import pandas as pd
 
 row = 9
 cols = 9
@@ -7,7 +8,7 @@ cols = 9
 def main():
 	print("ENTER THE SUDOCU")
 	form = []
-	#! TODO 1: reask the user if the input is not correct
+	#DONE TODO 1: reask the user if the input is not correct
 	#! TODO 2: except keybord interuption, and exit prettier
 	#! TODO 3: store the input into a list of lists
 	

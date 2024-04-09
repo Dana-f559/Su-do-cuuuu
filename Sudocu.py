@@ -1,6 +1,6 @@
 import sys
 import re
-import pandas as pd
+from tabulate import tabulate
 
 row = 9
 cols = 9
@@ -51,7 +51,8 @@ def checkInput(text: str) -> bool:
 	return False
 
 def CreateSudocu(form: list) -> None:
-	pass
+	if checkSudocu:
+		print(tabulate(form, tablefmt="grid"))
 	# Making a visual from the grid we will get.
 	
 	
@@ -60,7 +61,11 @@ def CreateSudocu(form: list) -> None:
 # prob wuru
 
 def checkSudocu(sudocu: list) -> bool:
-	return False
+	for i in row:
+		for j in cols:
+			if form[i][j] in form[i] or form[i][j] in form[j]
+
+	return True
 
 
 # solve it

@@ -1,7 +1,7 @@
 import sys
-from helpers import solve_sudoku, checkInput
-row = 3
-cols = 3
+from helpers import solve_sudoku, checkInput, DotToMinusOne
+row = 9
+cols = 9
 form = []
 
 #! fix when importing the input
@@ -20,19 +20,21 @@ def main():
         print(f"Line {line}")
 
         # get the input and get rid of spaces
-        temp = input("").replace(" ", "")
+        temp = input("").replace(" ","")
 
         # check the string
         if not checkInput(temp):
             print("Invalid input, please try again")
 
         else:
+            #Replacing the . with -1 and making it into a list.
+            temp = DotToMinusOne(temp)
             # Appending the list of values for a row to the main list.
-            form.append(list(temp))
+            form.append(temp)
             i -= 1
             line += 1
     
-    if not (solved := solve_sudoku(temp)):
+    if not (solved := solve_sudoku(form)):
         sys.exit("THE SUDOCU IS INVALID")
     else:
         print(solved)

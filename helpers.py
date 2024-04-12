@@ -62,3 +62,17 @@ def checkInput(text: str) -> bool:
 
     # else return false
     return False
+
+#This is to replace the . with -1 in the list
+def DotToMinusOne(temp: str) -> list:
+
+    #Making the input as a list
+    temp = list(temp)
+    #Iterating over that list for each of the number
+    for value in range(len(temp)):
+        #If it is . then making it -1
+        if temp[value] == ".":
+            temp[value] = "-1"
+    
+    #This is make the values from str to int
+    return list(map(int,temp))

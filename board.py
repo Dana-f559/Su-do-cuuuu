@@ -24,12 +24,13 @@ def generate_board_full(puzzle: list) -> bool:
         return True
 
     # for numbers from 1 to 9, try this guess
-    for guess in range(1, 10):
+    for guesses in range(1, 10):
         # if the guess is valid
+        guess = random.randint(1, 9)
         if is_valid(puzzle, guess, row, col):
 
             # set it in the list
-            puzzle[row][col] = random.randint(1, 9)
+            puzzle[row][col] = guess
 
             # use recursion to continue
             if generate_board_full(puzzle):
@@ -100,11 +101,7 @@ def remove_numbers(board: list, difficulty: int):
             temp = board[row][col]
             # Remove the number from the grid
             board[row][col] = -1
-            # Check if the puzzle still has a unique solution
-            # if not has_unique_solution(board):
-            # If not, restore the removed number
-            #     board[row][col] = temp
-            # else:
+            
             num_to_remove -= 1
 
 

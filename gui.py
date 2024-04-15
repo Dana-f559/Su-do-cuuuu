@@ -1,19 +1,9 @@
 import pygame
+
 from board import createBoard
-import os
-temp = [
 
-]
-for i in range(9):
-    temp.append([-1, -1, -1, -1, -1, -1, -1, -1, -1])
-
-createBoard(temp)
-
-# font_path = os.path.join('fonts', 'comic-sans', 'COMICSANS.ttf')
-
-# # Check if the font file exists
-# if not os.path.exists(font_path):
-#     raise FileNotFoundError(f"Font file '{font_path}' not found")
+# create the grid only for testing
+grid = createBoard()
 
 # set width and height
 WIDTH = 550
@@ -22,9 +12,54 @@ background_color = (251, 247, 245)
 original_grid_element_color = (52, 31, 151)
 buffer = 5
 
+grid_original = [[grid[x][y] for y in range(len(grid[0]))] for x in range(len(grid))]
 
 
-def draw_board(board: list):
+def insert(win, position):
+    i, j = position[1], position[0]
+    myfont = pygame.font.Font("fonts/comic-sans/comicsans.ttf", 35)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            if event.type == pygame.KEYDOWN:
+                print("\nKEYDOWN")
+                if grid_original[i - 1][j - 1] != 0:
+                    return
+                if event.key == 48:  # checking with 0
+                    grid[i - 1][j - 1] = event.key - 48
+                    pygame.draw.rect(
+                        win,
+                        background_color,
+                        (
+                            position[0] * 50 + buffer,
+                            position[1] * 50 + buffer,
+                            50 - 2 * buffer,
+                            50 - 2 * buffer,
+                        ),
+                    )
+                    pygame.display.update()
+                    return
+                if 0 < event.key - 48 < 10:  # We are checking for valid input
+                    pygame.draw.rect(
+                        win,
+                        background_color,
+                        (
+                            position[0] * 50 + buffer,
+                            position[1] * 50 + buffer,
+                            50 - 2 * buffer,
+                            50 - 2 * buffer,
+                        ),
+                    )
+                    value = myfont.render(str(event.key - 48), True, (0, 0, 0))
+                    win.blit(value, (position[0] * 50 + 15, position[1] * 50))
+                    grid[i - 1][j - 1] = event.key - 48
+                    pygame.display.update()
+                    return
+                return
+
+
+def draw_grid():
     # start
     pygame.init()
 
@@ -40,7 +75,7 @@ def draw_board(board: list):
     # set the font
     myfont = pygame.font.Font("fonts/comic-sans/comicsans.ttf", 35)
 
-    # draw the sudocu board
+    # draw the sudocu grid
     for i in range(0, 10):
         if i % 3 == 0:
             pygame.draw.line(win, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 4)
@@ -52,26 +87,28 @@ def draw_board(board: list):
     # update the screen
     pygame.display.update()
 
-    for i in range(0, len(board[0])):
-        for j in range(0, len(board[0])):
-            if 0 < board[i][j] < 10:
+    # for the puzzle
+    for i in range(0, len(grid[0])):
+        for j in range(0, len(grid[0])):
+
+            # if the number is between 1 and 9 add it to the display
+            if 0 < grid[i][j] < 10:
                 value = myfont.render(
-                    str(board[i][j]), True, original_grid_element_color
+                    str(grid[i][j]), True, original_grid_element_color
                 )
                 win.blit(value, ((j + 1) * 50 + 15, (i + 1) * 50))
     pygame.display.update()
 
-
-# while true check for events
+    # while true check for events
     while True:
         for event in pygame.event.get():
-            # if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            #     pos = pygame.mouse.get_pos()
-            #     insert(win, (pos[0]//50, pos[1]//50))
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                insert(win, (pos[0] // 50, pos[1] // 50))
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
 
 
 if __name__ == "__main__":
-    draw_board(temp)
+    draw_grid()

@@ -17,7 +17,7 @@ win = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
 # to insert the number
-def insert(win, position: tuple, event, grid_original, grid):
+def insert(win, position: tuple, event: pygame.event, grid_original:list, grid: list)->None:
 
     # set the i and j to the posotions
     i, j = position[1], position[0]
@@ -50,7 +50,7 @@ def insert(win, position: tuple, event, grid_original, grid):
 
         # update the screen
         pygame.display.update()
-        return True
+        return
 
     # if the key is a number add it to the
     if 0 < event.key - 48 < 10:
@@ -77,11 +77,11 @@ def insert(win, position: tuple, event, grid_original, grid):
 
         # update the screen
         pygame.display.update()
-        return True
+        return
     return
 
 
-def draw_grid(grid):
+def draw_grid(grid: list) -> None:
     # start
     # set width and height
 
@@ -94,7 +94,6 @@ def draw_grid(grid):
     # set the font
     myfont = pygame.font.Font(f"{a}/fonts/comic-sans/comicsans.ttf", 35)
 
-    # draw the sudocu grid
     # draw the sudocu grid
     for i in range(0, 10):
         bigboi = 50 * (i + 1)
@@ -129,7 +128,7 @@ def draw_grid(grid):
 def menu(): ...
 
 
-def run_game(grid: list, solved: list):
+def run_game(grid: list, solved: list, solve_sudocu: function) -> None:
 
     grid_original = [
         [grid[x][y] for y in range(len(grid[0]))] for x in range(len(grid))
@@ -155,14 +154,21 @@ def run_game(grid: list, solved: list):
                 pygame.quit()
                 return
 
+            # if the status is play
             if status == "Play":
+
+                # check for keydown 
                 if event.type == pygame.KEYDOWN:
-                    print("KEY DOWN")
+
+                    # can the mouse position
                     pos = pygame.mouse.get_pos()
-                    print(event.key)
+
+                    # insert the number
                     insert(
                         win, (pos[0] // 50, pos[1] // 50), event, grid_original, grid
                     )
 
+                # if the grid on the screen is the same as
+                # the solved version of it, then quit for now
                 if grid == solved:
                     pygame.quit()

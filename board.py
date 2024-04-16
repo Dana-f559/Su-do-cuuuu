@@ -10,7 +10,8 @@ def createBoard(dificutly: int = 50):
     if not a:
         return False
 
-    solved = temp
+
+    solved = [temp[x][y] for y in range(len(temp[0])) for x in range(len(temp))]
     # how many numbers to remove
     remove_numbers(temp, dificutly)
 
@@ -108,5 +109,6 @@ def remove_numbers(board: list, difficulty: int):
 
 
 if __name__ == "__main__":
-    a = createBoard()
+    a, b = createBoard()
     print(a)
+    print(b)

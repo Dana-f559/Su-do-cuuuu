@@ -11,7 +11,8 @@ def createBoard(dificutly: int = 50):
         return False
 
 
-    solved = [temp[x][y] for y in range(len(temp[0])) for x in range(len(temp))]
+    solved = [[temp[x][y] for y in range(len(temp[0]))] for x in range(len(temp))]
+    print(solved)
     # how many numbers to remove
     remove_numbers(temp, dificutly)
 

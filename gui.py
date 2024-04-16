@@ -24,8 +24,10 @@ def insert(win, position):
                 return
             if event.type == pygame.KEYDOWN:
                 print("\nKEYDOWN")
-                if grid_original[i - 1][j - 1] != 0:
+
+                if grid_original[i - 1][j - 1] != -1:
                     return
+                print(event.key)
                 if event.key == 48:  # checking with 0
                     grid[i - 1][j - 1] = event.key - 48
                     pygame.draw.rect(
@@ -104,6 +106,7 @@ def draw_grid():
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 pos = pygame.mouse.get_pos()
+                print(pos)
                 insert(win, (pos[0] // 50, pos[1] // 50))
             if event.type == pygame.QUIT:
                 pygame.quit()

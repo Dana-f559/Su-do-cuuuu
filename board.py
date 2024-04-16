@@ -1,7 +1,7 @@
 import random
 
 
-def createBoard():
+def createBoard(dificutly=50):
     temp = []
     for i in range(9):
         temp.append([-1, -1, -1, -1, -1, -1, -1, -1, -1])
@@ -10,7 +10,8 @@ def createBoard():
     if not a:
         return False
 
-    remove_numbers(temp, 40)
+    # how many numbers to remove
+    remove_numbers(temp, 20)
 
     return temp
 

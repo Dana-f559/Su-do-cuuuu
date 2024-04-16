@@ -1,35 +1,55 @@
 import pygame
+from pathlib import Path
 
-from board import createBoard
-
-# create the grid only for testing
-grid = createBoard()
+a = Path(__file__).resolve().parent
 
 # set width and height
 WIDTH = 550
 HEIGHT = 600
+
+# the background color
 background_color = (251, 247, 245)
+
+# element color
 original_grid_element_color = (52, 31, 151)
+
+# buffer
 buffer = 5
 
-grid_original = [[grid[x][y] for y in range(len(grid[0]))] for x in range(len(grid))]
+# set the status to menu
+status = "Menu"
 
+pygame.init()
 
-def insert(win, position):
+# to insert the number
+def insert(win, position: tuple):
+    # set the i and j to the posotions
     i, j = position[1], position[0]
-    myfont = pygame.font.Font("fonts/comic-sans/comicsans.ttf", 35)
+
+    # set the fount
+    myfont = pygame.font.Font(f"{a}/fonts/comic-sans/comicsans.ttf", 35)
+
+    # check for events
     while True:
         for event in pygame.event.get():
+            # if the event is quit, then quit
             if event.type == pygame.QUIT:
                 return
+            
+            # if the event is key down
             if event.type == pygame.KEYDOWN:
-                print("\nKEYDOWN")
 
+                # if the cell clicked on is not empty, return
                 if grid_original[i - 1][j - 1] != -1:
                     return
-                print(event.key)
-                if event.key == 48:  # checking with 0
+                
+                # if the key is 0, then make the cell empty
+                if event.key == 48: 
+
+                    # "reset" the grid cell
                     grid[i - 1][j - 1] = event.key - 48
+
+                    # draw empty rectangle on the screen
                     pygame.draw.rect(
                         win,
                         background_color,
@@ -40,9 +60,15 @@ def insert(win, position):
                             50 - 2 * buffer,
                         ),
                     )
+
+                    # update the screen
                     pygame.display.update()
                     return
-                if 0 < event.key - 48 < 10:  # We are checking for valid input
+                
+                # if the key is a number add it to the 
+                if 0 < event.key - 48 < 10:
+
+                    # draw the empty value
                     pygame.draw.rect(
                         win,
                         background_color,
@@ -53,9 +79,17 @@ def insert(win, position):
                             50 - 2 * buffer,
                         ),
                     )
+
+                    # set the number to draw
                     value = myfont.render(str(event.key - 48), True, (0, 0, 0))
+
+                    # draw the number 
                     win.blit(value, (position[0] * 50 + 15, position[1] * 50))
+
+                    # update the grid
                     grid[i - 1][j - 1] = event.key - 48
+
+                    # update the screen
                     pygame.display.update()
                     return
                 return
@@ -63,8 +97,6 @@ def insert(win, position):
 
 def draw_grid():
     # start
-    pygame.init()
-
     # set width and height
     win = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -75,7 +107,7 @@ def draw_grid():
     win.fill(background_color)
 
     # set the font
-    myfont = pygame.font.Font("fonts/comic-sans/comicsans.ttf", 35)
+    myfont = pygame.font.Font(f"{a}/fonts/comic-sans/comicsans.ttf", 35)
 
     # draw the sudocu grid
     for i in range(0, 10):
@@ -95,23 +127,65 @@ def draw_grid():
 
             # if the number is between 1 and 9 add it to the display
             if 0 < grid[i][j] < 10:
+
+                # set the number to draw
                 value = myfont.render(
                     str(grid[i][j]), True, original_grid_element_color
                 )
+
+                # draw the number
                 win.blit(value, ((j + 1) * 50 + 15, (i + 1) * 50))
+
+    # update the screen
     pygame.display.update()
 
     # while true check for events
     while True:
         for event in pygame.event.get():
+
+            # if the event is mouse button up, and its left click
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+
+                # get the mouse position
                 pos = pygame.mouse.get_pos()
-                print(pos)
+
+                # check for numbers and insert the value 
                 insert(win, (pos[0] // 50, pos[1] // 50))
+
+            # if the event is quit, quit
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
 
+def menu():
+    ...
 
-if __name__ == "__main__":
-    draw_grid()
+
+def run_game(grids: list, solved: list):
+
+    global grid
+    grid = grids
+
+    global grid_original
+    grid_original = solved
+
+    if status == "Menu":
+        draw_grid()
+
+
+    # # start the game loop
+    # while True:
+    #     if status == "Menu":
+    #         menu()
+
+    #     elif status == "Play":
+    #         draw_grid()
+
+    #     elif status == "Solve":
+    #        pass
+
+    #     # Check for events and update status
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             pygame.quit()
+    #             return

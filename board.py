@@ -1,7 +1,7 @@
 import random
 
 
-def createBoard(dificutly=50):
+def createBoard(dificutly: int = 50):
     temp = []
     for i in range(9):
         temp.append([-1, -1, -1, -1, -1, -1, -1, -1, -1])
@@ -10,10 +10,11 @@ def createBoard(dificutly=50):
     if not a:
         return False
 
+    solved = temp
     # how many numbers to remove
-    remove_numbers(temp, 20)
+    remove_numbers(temp, dificutly)
 
-    return temp
+    return solved, temp
 
 
 def generate_board_full(puzzle: list) -> bool:

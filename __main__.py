@@ -1,3 +1,7 @@
 from solve import solve_sudoku
+from board import createBoard
+from gui import run_game
 
-print("hello")
+grid_original, grid = createBoard()
+
+run_game(grid, grid_original)

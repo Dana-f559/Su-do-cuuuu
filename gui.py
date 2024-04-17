@@ -146,7 +146,7 @@ def draw_grid(grid: list) -> None:
 
 
 # draw all the buttons in the menu
-def menu(status):
+def menu():
     rect1 = pygame.Rect(starting_x, starting_y, width_b, height_b)
     button1 = Button(rect1, button_b, "Easy", 60)
     button1.draw(win)
@@ -167,15 +167,16 @@ def menu(status):
 
 
 def run_game(createBoard, solve_sudocu) -> None:
+    # setting arrays so they can be acessed across the function
     solved = []
     grid = []
     grid_original = []
+    temp = [[-1 for i in range(9)] for i in range(9)]
 
     draw = True
 
+    # starting status at menu
     status = "Menu"
-
-    temp = [[-1 for i in range(9)] for i in range(9)]
 
     while True:
 
@@ -187,50 +188,61 @@ def run_game(createBoard, solve_sudocu) -> None:
             win.fill(background_color_menu)
 
             # add the buttons
-            buttons = menu(status)
+            buttons = menu()
 
-            
 
         if status == "Play" and draw:
+            # draw it, and stop
             draw_grid(grid)
             draw = False
 
         if status == "Solve" and draw:
+            # draw it, and stop
             draw_grid(temp)
             draw = False
 
         # Check for events and update status
         for event in pygame.event.get():
 
+            # check for quit events
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+            
+
+            # if the status is menu
             if status == "Menu":
+
+                # for each button
                 for button in buttons:
+
+                    # if the button is pressed
                     if dificulty := button.process_event(event):   
-                        print("on")
-                        
+                       
+                        # if dificulty is not 1000 (that one is for other status)
                         if dificulty != 1000:
+
+                            # create the bords with set dificulty
                             solved, grid = createBoard(dificulty)
 
                             grid_original = [
                                 [grid[x][y] for y in range(len(grid[0]))] for x in range(len(grid))
                             ]   
-                            print(dificulty)
+                            
+                            # change status to play
                             status = "Play"
                         else:
+
+                            # change status to solve
                             status = "Solve"
-                            print(status)
-                    
-
-                # print(dificulty)
-                
-
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                return
+                                   
 
             # if the status is play
             if status == "Play":
+
                 # check for keydown
                 if event.type == pygame.KEYDOWN:
+
                     # can the mouse position
                     pos = pygame.mouse.get_pos()
 
@@ -258,12 +270,12 @@ def run_game(createBoard, solve_sudocu) -> None:
                     draw = True
                     # insert the number
                     insert(win, (pos[0] // 50, pos[1] // 50), event, temp, temp)
-
-                    
+  
 
                     if event.key == 13:
                         if solve_sudocu(temp):
                             draw = True
 
+        # update the display
         pygame.display.update()
 

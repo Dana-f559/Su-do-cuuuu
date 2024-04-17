@@ -201,6 +201,25 @@ def run_game(createBoard, solve_sudocu) -> None:
             draw_grid(temp)
             draw = False
 
+        if status == "Ending":
+            pygame.display.set_caption("Menu")
+
+            # fill the background
+            win.fill(background_color_menu)
+
+            # create a text surface object,
+            # on which text is drawn on it.
+            font = pygame.font.Font(f"{a}/fonts/comic-sans/comicsans.ttf", 23)
+            text = font.render('U won, congrats.(but still now gud enough- wuru)', True, "black")
+            
+            # text surface object
+            textRect = text.get_rect()
+            
+            # set the center of the rectangular object.
+            textRect.center = (280, 400 // 2)
+
+            win.blit(text, textRect)
+
         # Check for events and update status
         for event in pygame.event.get():
 
@@ -254,8 +273,7 @@ def run_game(createBoard, solve_sudocu) -> None:
                 # if the grid on the screen is the same as
                 # the solved version of it, then quit for now
                 if grid == solved:
-                    pygame.quit()
-                    sys.exit()
+                    status = "Ending"
 
             if status == "Solve":
 

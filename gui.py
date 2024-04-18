@@ -276,10 +276,7 @@ def run_game(createBoard, solve_sudocu) -> None:
                     status = "Ending"
 
             if status == "Solve":
-
-                print("heo")
-                # draw = False 
-                # check for keydown
+                
                 if event.type == pygame.KEYDOWN:
 
                     # can the mouse position
@@ -290,6 +287,7 @@ def run_game(createBoard, solve_sudocu) -> None:
                     insert(win, (pos[0] // 50, pos[1] // 50), event, temp, temp)
   
 
+                    # draw = False
                     if event.key == 13:
                         if solve_sudocu(temp):
                             draw = True

@@ -35,3 +35,6 @@ The programm may take a couple of seconds to load. When it is loaded, u will see
 To input a number into a sudocu cell, u have to put your mouse over the cell and press a number. 
 
 Once you solved a sudocu correctly it will give you an ending screen.
+
+
+(the whole code was writte by Dana-f559, but in the terminal version of the game, EshaanAdarsh wrote some of the code which was not used in the new version (gui))

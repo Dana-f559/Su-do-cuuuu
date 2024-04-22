@@ -19,6 +19,7 @@ pip install -r requirements.txt
 ## Usage
 
 To play the game, go to the same folder where the repo was cloned and run the following command:
+(DO NOT cd into the folder. You are supposed to RUN the folder.)
 
 - For Windows:
 ```
